@@ -24,9 +24,11 @@ pipeline {
           //withDockerRegistry([ credentialsId: "ecr:us-east-1:" + registryCredential, url: "" ]) {
           //  sh "docker build -t anqingxu/petclinic:v1.0.0 ."
           //  sh "docker push anqingxu/petclinic:v1.0.0"
-          dockerImage = docker.build registry + "/anqingxu/petclinic:v1.0.0"
-          docker.withRegistry("https://" + registry, "ecr:us-east-1:" + registryCredential) {
-            dockerImage.push()
+          script{
+            dockerImage = docker.build registry + "/anqingxu/petclinic:v1.0.0"
+            docker.withRegistry("https://" + registry, "ecr:us-east-1:" + registryCredential) {
+              dockerImage.push()
+            }
           }
         }
       }
