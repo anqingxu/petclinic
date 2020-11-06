@@ -7,7 +7,7 @@ def workdir = "${workspace}/src/github.com/anqingxu/petclinic/"
 
 podTemplate(label: label,
         containers: [
-                containerTemplate(name: 'maven', image: 'jenkins/jnlp-agent-maven:jdk11')
+                containerTemplate(name: 'maven', image: 'jenkins/jnlp-agent-maven:jdk11'),
         ],
         envVars: [
                 envVar(key: 'WORKPLACE', value: workspace),
