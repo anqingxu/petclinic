@@ -1,0 +1,27 @@
+#!/usr/bin/env groovy
+
+pipelineJob('build-jenkins-operator') {
+    displayName('Build jenkins-operator')
+
+    properties {
+        pipelineTriggers {
+            triggers {
+                githubPush()
+            }
+        }
+    }
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote {
+                        url('https://github.com/anqingxu/jpetclinic.git')
+                    }
+                    branches('*/master')
+                }
+            }
+            scriptPath('cicd/pipelines/build.jenkins')
+        }
+    }
+}
