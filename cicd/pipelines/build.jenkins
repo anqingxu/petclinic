@@ -1,16 +1,10 @@
 pipeline {
-  agent {
-    docker {
-        image 'maven:3-jdk-8'
-        args  '-v /.m2:/root/.m2'
-    }
-}
-  options {
-    buildDiscarder(logRotator(numToKeepStr: '5'))
-  }
+  agent any
+
   triggers {
     pollSCM('H/5 * * * *')
   }
+
   stages {
     stage('Build') {
       steps {
