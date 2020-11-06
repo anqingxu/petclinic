@@ -26,13 +26,19 @@ pipeline {
           //  sh "docker build -t anqingxu/petclinic:v1.0.0 ."
           //  sh "docker push anqingxu/petclinic:v1.0.0"
           script{
-          //cleanup current user docker credentials
+            //https://stackoverflow.com/questions/59084989/push-to-ecr-from-jenkins-pipeline
+            dockerImage = docker.build registry + "/anqingxu/petclinic:v1.0.0"
+
+            //cleanup current user docker credentials
             sh 'rm  ~/.dockercfg || true'
             sh 'rm ~/.docker/config.json || true'
 
-            //https://stackoverflow.com/questions/59084989/push-to-ecr-from-jenkins-pipeline
-            dockerImage = docker.build registry + "/anqingxu/petclinic:v1.0.0"
+            sh 'cat ~/.dockercfg'
+            sh 'cat ~/.docker/config.json'
+
             docker.withRegistry("https://" + registry, "ecr:us-east-1:" + registryCredential) {
+              sh 'cat ~/.dockercfg'
+              sh 'cat ~/.docker/config.json'
               dockerImage.push()
             }
           }
