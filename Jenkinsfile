@@ -16,8 +16,10 @@ pipeline {
     stage('Build Docker Image') {
       steps {
         container('docker') {
-          sh "docker build -t anqingxu/petclinic:v1.0.0 ."  // when we run docker in this step, we're running it via a shell on the docker build-pod container,
-          sh "docker push anqingxu/petclinic:v1.0.0"        // which is just connecting to the host docker deaemon
+          withDockerRegistry([ credentialsId: "dockerhub_id", url: "" ]) {
+            sh "docker build -t anqingxu/petclinic:v1.0.0 ."  // when we run docker in this step, we're running it via a shell on the docker build-pod container,
+            sh "docker push anqingxu/petclinic:v1.0.0"        // which is just connecting to the host docker deaemon
+          }
         }
       }
     }
