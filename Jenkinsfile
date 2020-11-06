@@ -7,6 +7,11 @@ pipeline {
       defaultContainer 'maven'  // define a default container if more than a few stages use it, will default to jnlp container
     }
   }
+  environment {
+    registry = '632912596221.dkr.ecr.us-east-1.amazonaws.com'
+    registryCredential = 'ecr_id'
+    dockerImage = ''
+  }
   stages {
     stage('Build') {
       steps {  // no container directive is needed as the maven container is the default
@@ -16,12 +21,16 @@ pipeline {
     stage('Build Docker Image') {
       steps {
         container('docker') {
-          withDockerRegistry([ credentialsId: "dockerhub_id", url: "" ]) {
-            sh "docker build -t anqingxu/petclinic:v1.0.0 ."  // when we run docker in this step, we're running it via a shell on the docker build-pod container,
-            sh "docker push anqingxu/petclinic:v1.0.0"        // which is just connecting to the host docker deaemon
+          //withDockerRegistry([ credentialsId: "ecr:us-east-1:" + registryCredential, url: "" ]) {
+          //  sh "docker build -t anqingxu/petclinic:v1.0.0 ."
+          //  sh "docker push anqingxu/petclinic:v1.0.0"
+          dockerImage = docker.build registry + "/anqingxu/petclinic:v1.0.0"
+          docker.withRegistry("https://" + registry, "ecr:us-east-1:" + registryCredential) {
+            dockerImage.push()
           }
         }
       }
     }
   }
 }
+//https://stackoverflow.com/questions/59084989/push-to-ecr-from-jenkins-pipeline
