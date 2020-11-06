@@ -20,7 +20,7 @@ pipeline {
     }
     stage('Build Docker Image') {
       steps {
-        //container('docker') {
+        container('docker') {
           //withDockerRegistry([ credentialsId: "ecr:us-east-1:" + registryCredential, url: "" ]) {
           //  sh "docker build -t anqingxu/petclinic:v1.0.0 ."
           //  sh "docker push anqingxu/petclinic:v1.0.0"
@@ -31,7 +31,7 @@ pipeline {
               dockerImage.push()
             }
           }
-        //}
+        }
       }
     }
   }
