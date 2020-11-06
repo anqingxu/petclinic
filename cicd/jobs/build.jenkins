@@ -21,7 +21,7 @@ pipelineJob('build-petclinic-using-jenkins-operator') {
                     branches('*/master')
                 }
             }
-            scriptPath('cicd/pipelines/build.jenkins')
+            scriptPath('Jenkinsfile')
         }
     }
 }
