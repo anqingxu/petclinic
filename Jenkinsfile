@@ -20,19 +20,19 @@ pipeline {
     }
     stage('Build Docker Image') {
       steps {
-        container('docker') {
+        //container('docker') {
           //withDockerRegistry([ credentialsId: "ecr:us-east-1:" + registryCredential, url: "" ]) {
           //  sh "docker build -t anqingxu/petclinic:v1.0.0 ."
           //  sh "docker push anqingxu/petclinic:v1.0.0"
           script{
+            //https://stackoverflow.com/questions/59084989/push-to-ecr-from-jenkins-pipeline
             dockerImage = docker.build registry + "/anqingxu/petclinic:v1.0.0"
             docker.withRegistry("https://" + registry, "ecr:us-east-1:" + registryCredential) {
               dockerImage.push()
             }
           }
-        }
+        //}
       }
     }
   }
 }
-//https://stackoverflow.com/questions/59084989/push-to-ecr-from-jenkins-pipeline
