@@ -8,7 +8,7 @@ def workdir = "${workspace}/src/github.com/anqingxu/petclinic/"
 podTemplate(label: label,
         containers: [
             containerTemplate(name: 'maven', image: 'jenkins/jnlp-agent-maven:jdk11'),
-            containerTemplate(name: 'docker', image: 'docker:18.06.1'),
+            //containerTemplate(name: 'docker', image: 'docker:18.06.1'),
         ],
     ) {
 
@@ -37,7 +37,7 @@ podTemplate(label: label,
             }
 
             stage('Publish') {
-                container('docker') {
+                container('maven') {
                     sh 'docker build -t anqingxu/petclinic:v1.0.0 .'
                     sh 'docker push anqingxu/petclinic:v1.0.0'
                     //withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
