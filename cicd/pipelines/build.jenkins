@@ -6,9 +6,20 @@ pipeline {
   }
 
   stages {
+    stage ('Initialize') {
+          steps {
+              sh 'env'
+              sh '''
+                  echo "PATH = ${PATH}"
+                  echo "M2_HOME = ${M2_HOME}"
+                  echo "MAVEN_HOME = ${MAVEN_HOME}"
+                  echo "JDK_HOME = ${JDK_HOME}"
+              '''
+          }
+    }
     stage('Build') {
       steps {
-        sh '/usr/bin/mvn -B package -DskipTests'
+        sh 'mvn -B package -DskipTests'
         sh 'docker build -t anqingxu/petclinic:v1.0.0 .'
       }
     }
