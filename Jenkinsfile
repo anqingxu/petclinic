@@ -33,9 +33,6 @@ pipeline {
             sh 'rm  ~/.dockercfg || true'
             sh 'rm ~/.docker/config.json || true'
 
-            sh 'cat ~/.dockercfg'
-            sh 'cat ~/.docker/config.json'
-
             docker.withRegistry("https://" + registry, "ecr:us-east-1:" + registryCredential) {
               sh 'cat ~/.dockercfg'
               sh 'cat ~/.docker/config.json'
