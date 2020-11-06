@@ -33,17 +33,17 @@ podTemplate(label: label,
             stage('Build') {
                 container('maven') {
                   sh 'mvn -B package -DskipTests'
-                  sh 'docker build -t anqingxu/petclinic:v1.0.0 .'
+                  //sh 'docker build -t anqingxu/petclinic:v1.0.0 .'
                 }
             }
 
-            stage('Publish') {
-                container('maven') {
-                    withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
-                      sh 'docker push anqingxu/petclinic:v1.0.0'
-                    }
-                }
-            }
+            //stage('Publish') {
+            //    container('maven') {
+            //        withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
+            //          sh 'docker push anqingxu/petclinic:v1.0.0'
+            //        }
+            //    }
+            //}
         }
     }
 }
