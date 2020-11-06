@@ -7,10 +7,8 @@ def workdir = "${workspace}/src/github.com/anqingxu/petclinic/"
 
 podTemplate(label: label,
         containers: [
-                containerTemplate(name: 'maven', image: 'jenkins/jnlp-agent-maven:jdk11'),
-        ],
-        envVars: [
-                envVar(key: 'WORKPLACE', value: workspace),
+            containerTemplate(name: 'maven', image: 'jenkins/jnlp-agent-maven:jdk11'),
+            containerTemplate(name: 'docker', image: 'docker:18.06.1'),
         ],
     ) {
 
@@ -35,15 +33,18 @@ podTemplate(label: label,
                   sh 'mvn -B package -DskipTests'
                   //sh 'docker build -t anqingxu/petclinic:v1.0.0 .'
                 }
+
             }
 
-            //stage('Publish') {
-            //    container('maven') {
-            //        withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
-            //          sh 'docker push anqingxu/petclinic:v1.0.0'
-            //        }
-            //    }
-            //}
+            stage('Publish') {
+                container('docker') {
+                    sh 'docker build -t anqingxu/petclinic:v1.0.0 .'
+                    sh 'docker push anqingxu/petclinic:v1.0.0'
+                    //withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
+                    //  sh 'docker push anqingxu/petclinic:v1.0.0'
+                    //}
+                }
+            }
         }
     }
 }
