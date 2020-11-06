@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
-pipelineJob('build-jenkins-operator') {
-    displayName('Build jenkins-operator')
+pipelineJob('build-petclinic-using-jenkins-operator') {
+    displayName('Build PetClinic using jenkins-operator')
 
     properties {
         pipelineTriggers {
