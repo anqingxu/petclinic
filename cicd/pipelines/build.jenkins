@@ -9,12 +9,11 @@ pipeline {
     stage ('Initialize') {
           steps {
               sh 'env'
-              sh '''
-                  echo "PATH = ${PATH}"
-                  echo "M2_HOME = ${M2_HOME}"
-                  echo "MAVEN_HOME = ${MAVEN_HOME}"
-                  echo "JDK_HOME = ${JDK_HOME}"
-              '''
+              sh 'echo $PATH'
+              sh 'whoami'
+              sh 'hostname'
+              sh 'echo $MAVEN_HOME'
+              sh 'java -version'
           }
     }
     stage('Build') {
