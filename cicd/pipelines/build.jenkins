@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-def label = "build-petclinic-using-jenkins-operator-${UUID.randomUUID().toString()}"
+def label = "build-petclinic-${UUID.randomUUID().toString()}"
 def home = "/home/jenkins"
 def workspace = "${home}/workspace/"
 def workdir = "${workspace}/src/github.com/anqingxu/petclinic/"
